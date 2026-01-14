@@ -31,9 +31,9 @@ try {
         new Currency($targetCurrency)
       );
 
-      $convertedAmount = $converter->convert();
+      $conversionResult = $converter->convert();
       $formattedOriginalAmount = sprintf('%.2f %s', $originalAmount->getAmount(), $originalAmount->getCurrency()->getCode());
-      $formattedConvertedAmount = sprintf('%.2f %s', $convertedAmount->getAmount(), $convertedAmount->getCurrency()->getCode());
+      $formattedConvertedAmount = sprintf('%.2f %s', $conversionResult->getConverted()->getAmount(), $conversionResult->getConverted()->getCurrency()->getCode());
 
       echo "\n";
       echo "Original: {$formattedOriginalAmount}\n";

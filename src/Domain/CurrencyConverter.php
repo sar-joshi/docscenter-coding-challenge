@@ -30,14 +30,17 @@ class CurrencyConverter
   /**
    * Convert currency amount to another currency
    * 
-   * @return CurrencyAmount Converted amount
+   * @return ConversionResult Converted result
    */
-  public function convert(): CurrencyAmount
+  public function convert(): ConversionResult
   {
     $rate = $this->getRate();
     $finalAmount = $this->amount->getAmount() * $rate;
 
-    return new CurrencyAmount($finalAmount, $this->targetCurrency);
+    return new ConversionResult(
+      $this->amount,
+      new CurrencyAmount($finalAmount, $this->targetCurrency)
+    );
   }
 
   /**
