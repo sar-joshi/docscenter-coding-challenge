@@ -2,11 +2,15 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . "/../vendor/autoload.php";
 
 use App\Domain\Currency;
 use App\Domain\CurrencyAmount;
 use App\Domain\CurrencyConverter;
+use App\Infrastructure\CsvRepository;
+
+# CSV file path
+$csvFilePath = __DIR__ . "/../data/conversions.csv";
 
 try {
   $args = array_slice($argv, 1);
@@ -32,14 +36,15 @@ try {
       );
 
       $conversionResult = $converter->convert();
-      $formattedOriginalAmount = sprintf('%.2f %s', $originalAmount->getAmount(), $originalAmount->getCurrency()->getCode());
-      $formattedConvertedAmount = sprintf('%.2f %s', $conversionResult->getConverted()->getAmount(), $conversionResult->getConverted()->getCurrency()->getCode());
 
       echo "\n";
-      echo "Original: {$formattedOriginalAmount}\n";
-      echo "Converted: {$formattedConvertedAmount}\n";
+      echo "Original:" . str_replace(",", "", $conversionResult->getOriginal()->csvFormatted()) . "\n";
+      echo "Converted:" . str_replace(",", "", $conversionResult->getConverted()->csvFormatted()) . "\n";
 
-      # TODO: save to csv
+      # Save result to CSV
+      $csvRepository = new CsvRepository($csvFilePath);
+      $csvRepository->save($conversionResult);
+
       break;
     case "calculate-profit":
       # TODO

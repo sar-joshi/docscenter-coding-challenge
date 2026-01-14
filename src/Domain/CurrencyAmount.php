@@ -43,8 +43,8 @@ final class CurrencyAmount
   /**
    * Format for amounts. e.g, "100.00 AUD"
    */
-  public function formatted(): string
+  public function csvFormatted(): string
   {
-    return sprintf('%.2f %s', $this->amount, $this->currency->getCode());
+    return "{$this->amount}, {$this->currency->getCode()}";
   }
 }

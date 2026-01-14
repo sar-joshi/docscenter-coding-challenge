@@ -26,8 +26,8 @@ class CsvRepository implements CsvRepositoryInterface
     $csv = Writer::createFromPath($this->csvFile, 'a+');
 
     $csv->insertOne([
-      $conversionResult->getOriginal()->formatted(),
-      $conversionResult->getConverted()->formatted(),
+      $conversionResult->getOriginal()->csvFormatted(),
+      $conversionResult->getConverted()->csvFormatted(),
     ]);
   }
 

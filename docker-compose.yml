@@ -3,4 +3,5 @@ services:
     build: .
     volumes:
       - ./src:/app/src
+      - ./data:/app/data
     entrypoint: ["php", "src/cli.php"]
