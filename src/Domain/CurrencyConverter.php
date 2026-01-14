@@ -57,7 +57,7 @@ class CurrencyConverter
     }
 
     $fromRate = self::RATES_TO_AUD[$fromCode];
-    $toRate = self::RATES_TO_AUD[$fromCode];
+    $toRate = self::RATES_TO_AUD[$toCode];
 
     return $fromRate / $toRate;
   }
