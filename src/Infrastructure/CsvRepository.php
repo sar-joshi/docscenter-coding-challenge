@@ -3,9 +3,12 @@
 namespace App\Infrastructure;
 
 use League\Csv\Writer;
+use League\Csv\Reader;
 
-use App\Domain\CsvRepositoryInterface;
+use App\Domain\Currency;
+use App\Domain\CurrencyAmount;
 use App\Domain\ConversionResult;
+use App\Domain\CsvRepositoryInterface;
 
 class CsvRepository implements CsvRepositoryInterface
 {
@@ -31,10 +34,33 @@ class CsvRepository implements CsvRepositoryInterface
     ]);
   }
 
+  /**
+   * Return data from CSV file
+   * 
+   * @return ConversionResult[]
+   */
   public function findAll(): array
   {
-    # TODO: Implement this method
-    return [];
+    if (!file_exists($this->csvFile)) {
+      return [];
+    }
+
+    $results = [];
+    $csv = Reader::createFromPath($this->csvFile, 'r');
+
+    foreach ($csv->getRecords() as $record) {
+      $original = explode(",", $record[0]);
+      $converted = explode(",", $record[1]);
+
+      $results[] = new ConversionResult(
+        new CurrencyAmount((float) $original[0], new Currency($original[1])),
+        new CurrencyAmount((float) $converted[0], new Currency($converted[1])),
+      );
+    }
+
+    var_dump($results[0]); # TODO: remove this
+
+    return $results;
   }
 
   /**
