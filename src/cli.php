@@ -7,6 +7,7 @@ require_once __DIR__ . "/../vendor/autoload.php";
 use App\Domain\Currency;
 use App\Domain\CurrencyAmount;
 use App\Domain\CurrencyConverter;
+use App\Domain\ProfitCalculator;
 use App\Infrastructure\CsvRepository;
 
 # CSV file path
@@ -18,13 +19,13 @@ try {
 
   [$amount, $sourceCurrency, $targetCurrency] = $args;
 
-  if (count($args) !== 3) {
-    echo "\nExample Args: 100 USD AUD\n";
-    return 1;
-  }
-
   switch ($actionType) {
     case "convert":
+      if (count($args) !== 3) {
+        echo "\nExample Args: 100 USD AUD\n";
+        return 1;
+      }
+
       $originalAmount = new CurrencyAmount((float) $amount, new Currency($sourceCurrency));
       $converter = new CurrencyConverter($originalAmount, new Currency($targetCurrency));
       $conversionResult = $converter->convert();
@@ -39,7 +40,15 @@ try {
 
       break;
     case "calculate-profit":
-      # TODO
+      $csvRepository = new CsvRepository($csvFilePath);
+      $conversionResults = $csvRepository->findAll();
+
+      $profitCalculator = new ProfitCalculator();
+      $totalProfit = $profitCalculator->getTotalProfit($conversionResults);
+
+      echo "\n";
+      echo "Total Profit: {$totalProfit} AUD";
+
       break;
     default:
       echo "Invalid Command";
