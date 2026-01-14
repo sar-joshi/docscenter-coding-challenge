@@ -39,6 +39,34 @@ Using Docker
   docker compose run --rm app calculate-profit
 ```
 
+### Running Tests
+```bash
+  docker compose run --rm tests vendor/bin/phpunit tests/CoreLogicTest.php
+```
 
+## Project Structure
 
-
+```bash
+.
+├── Dockerfile
+├── README.md
+├── composer.json
+├── composer.lock
+├── data
+│   └── conversions.csv
+├── docker-compose.yml
+├── phpunit.xml
+├── src
+│   ├── Domain # (Business Logics)
+│   │   ├── ConversionResult.php
+│   │   ├── CsvRepositoryInterface.php
+│   │   ├── Currency.php
+│   │   ├── CurrencyAmount.php
+│   │   ├── CurrencyConverter.php
+│   │   └── ProfitCalculator.php
+│   ├── Infrastructure # (External Implementation)
+│   │   └── CsvRepository.php
+│   └── cli.php # (Application Entry Point)
+└── tests
+    └── CoreLogicTest.php
+```

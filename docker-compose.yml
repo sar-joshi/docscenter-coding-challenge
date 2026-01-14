@@ -5,3 +5,8 @@ services:
       - ./src:/app/src
       - ./data:/app/data
     entrypoint: ["php", "src/cli.php"]
+  
+  tests:
+    build: .
+    volumes:
+      - ./tests:/app/tests
