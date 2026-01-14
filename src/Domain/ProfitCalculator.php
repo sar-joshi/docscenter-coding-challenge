@@ -34,10 +34,6 @@ class ProfitCalculator
     foreach ($results as $result) {
       $audAmount = $this->getAudAmount($result);
       $profit = $this->calculateProfit($audAmount);
-
-      $test = round($audAmount * $this->profitPercentage / 100, self::CONFIG_FLOAT_PRECISION);
-      var_dump("Profit: {$test}");
-
       $totalProfit += $profit;
     }
 
@@ -57,8 +53,6 @@ class ProfitCalculator
   {
     $original = $result->getOriginal();
     $converted = $result->getConverted();
-
-    // var_dump($original->getAmount(), $converted->getAmount());
 
     if ($original->getCurrency()->getCode() === CURRENCY::AUD) {
       return $original->getAmount();

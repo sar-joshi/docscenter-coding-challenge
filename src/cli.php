@@ -22,7 +22,7 @@ try {
   switch ($actionType) {
     case "convert":
       if (count($args) !== 3) {
-        echo "\nExample Args: 100 USD AUD\n";
+        echo "\nError: Not enough arguments. Example Args: 100 USD AUD\n";
         return 1;
       }
 
@@ -54,6 +54,9 @@ try {
       echo "Invalid Command";
       exit(1);
   }
+} catch (InvalidArgumentException $e) {
+  echo $e->getMessage() . "";
+  exit(1);
 } catch (Exception $e) {
   echo $e->getMessage() . "";
   exit(1);

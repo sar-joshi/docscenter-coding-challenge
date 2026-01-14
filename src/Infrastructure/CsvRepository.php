@@ -58,8 +58,6 @@ class CsvRepository implements CsvRepositoryInterface
       );
     }
 
-    var_dump($results[0]); # TODO: remove this
-
     return $results;
   }
 
