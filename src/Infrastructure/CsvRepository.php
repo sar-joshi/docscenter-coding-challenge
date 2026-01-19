@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure;
 
+use Generator;
 use League\Csv\Writer;
 use League\Csv\Reader;
 
@@ -37,28 +38,25 @@ class CsvRepository implements CsvRepositoryInterface
   /**
    * Return data from CSV file
    * 
-   * @return ConversionResult[]
+   * @return Generator<ConversionResult>
    */
-  public function findAll(): array
+  public function findAll(): Generator
   {
     if (!file_exists($this->csvFile)) {
-      return [];
+      yield from [];
     }
 
-    $results = [];
     $csv = Reader::createFromPath($this->csvFile, 'r');
 
     foreach ($csv->getRecords() as $record) {
       $original = explode(",", $record[0]);
       $converted = explode(",", $record[1]);
 
-      $results[] = new ConversionResult(
+      yield new ConversionResult(
         new CurrencyAmount((float) $original[0], new Currency($original[1])),
         new CurrencyAmount((float) $converted[0], new Currency($converted[1])),
       );
     }
-
-    return $results;
   }
 
   /**

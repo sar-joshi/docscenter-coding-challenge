@@ -2,6 +2,8 @@
 
 namespace App\Domain;
 
+use Generator;
+
 interface CsvRepositoryInterface
 {
   /**
@@ -12,7 +14,7 @@ interface CsvRepositoryInterface
   /**
    * Return all converted values
    * 
-   * @return ConversionResult[]
+   * @return Generator<ConversionResult>
    */
-  public function findAll(): array;
+  public function findAll(): Generator;
 }

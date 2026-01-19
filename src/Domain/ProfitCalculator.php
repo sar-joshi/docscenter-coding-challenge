@@ -21,9 +21,9 @@ class ProfitCalculator
   /**
    * Return total profit in AUD currency from all conversions
    * 
-   * @param ConversionResult[] $results
+   * @param iterable<ConversionResult> $results
    */
-  public function getTotalProfit(array $results)
+  public function getTotalProfit(iterable $results): float
   {
     if (empty($results)) {
       return 0.0;
