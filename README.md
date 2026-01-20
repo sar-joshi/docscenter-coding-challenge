@@ -1,5 +1,3 @@
-# docscenter-coding-challenge
-
 A PHP currency converter and profit calculator.
 
 ## Assumptions
